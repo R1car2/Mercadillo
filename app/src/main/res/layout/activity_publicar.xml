@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient"
     tools:context=".PublicarActivity">
+
     <!-- AppBarLayout contiene la Toolbar para el título -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +21,7 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="Publicar Nuevo Producto" />
     </com.google.android.material.appbar.AppBarLayout>
+
     <!-- ScrollView para asegurar que todos los campos sean visibles -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -62,6 +64,7 @@ producto" />
                         android:backgroundTint="?attr/colorAccent"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <!-- Campo de Entrada: Nombre del Producto -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -77,12 +80,12 @@ producto" />
                     android:inputType="textCapSentences"
                     android:maxLength="50" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Campo de Entrada: Precio -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Precio (Ej: 99990.00)"
-
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginBottom="8dp">
                 <com.google.android.material.textfield.TextInputEditText
@@ -91,6 +94,22 @@ producto" />
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- MODIFICACION: Dirección -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dirección de Retiro o Entrega"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginBottom="8dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_publicar_direccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPostalAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- FIN MODIFICACIÓN -->
+
             <!-- Campo de Entrada: Descripción -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -107,6 +126,7 @@ producto" />
                     android:gravity="top"
                     android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Botón Principal: Publicar Producto -->
             <Button
                 android:id="@+id/btn_publicar_producto"

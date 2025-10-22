@@ -3,12 +3,17 @@ package com.ricardo.mercadillo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+
 import com.ricardo.mercadillo.adapter.ProductoAdapter;
 import com.ricardo.mercadillo.model.Producto;
 import java.util.ArrayList;
@@ -19,6 +24,11 @@ public class HomeActivity extends AppCompatActivity {
     // Vistas principales
     private RecyclerView recyclerView;
     private FloatingActionButton fabPublicar;
+
+    //Declaración del componente de navegación inferior
+    private BottomNavigationView bottomNav;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +36,19 @@ public class HomeActivity extends AppCompatActivity {
         // 1. Inicializar Vistas
         recyclerView = findViewById(R.id.rv_productos);
         fabPublicar = findViewById(R.id.fab_publicar);
+
+        // --- SEMANA 4: Inicialización
+        bottomNav = findViewById(R.id.bottom_navigation_view);
+        bottomNav.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
+
+        // Configuración mínima del listener
+        bottomNav.setOnItemSelectedListener(item -> {
+            Toast.makeText(HomeActivity.this, "Navegando a: " + item.getTitle(),
+                    Toast.LENGTH_SHORT).show();
+            return true;
+        });
+        // --- FIN SEMANA 4 ---
+
         // 2. Configuración CLAVE del RecyclerView
         configurarRecyclerView();
         // 3. Botón FAB para publicar producto
@@ -64,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
     // --- Menú Superior para Logout ---
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu, menu); // Preguntar de que hace hace referencia este menu
         return true;
     }
     @Override
