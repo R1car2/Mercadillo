@@ -21,26 +21,41 @@
             app:title="MarketPlace - Productos" />
     </com.google.android.material.appbar.AppBarLayout>
     <!-- RecyclerView para mostrar la lista de productos-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_productos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_producto" />
     <!-- tools:listitem indica cómo se verá cada celda, usando la plantilla
    item_producto.xml -->
     <!-- Floating Action Button (FAB) para la acción de publicar un nuevo producto
    -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_productos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/activity_producto" />
+
+    <!-- 3. Menú inferior -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled"
+        app:elevation="8dp" />
+    <!-- 4. Botón flotante FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_publicar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:layout_anchor="@id/bottom_navigation_view"
+        app:layout_anchorGravity="top|center"
+        android:layout_marginBottom="0dp"
+        app:srcCompat="@drawable/ic_add"
         app:backgroundTint="?attr/colorAccent"
         app:tint="@android:color/white"
+        app:elevation="12dp"
         android:contentDescription="Publicar un nuevo producto" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
