@@ -27,7 +27,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     public ProductoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         // Inflamos el layout de cada item de la lista
-        View view = LayoutInflater.from(context).inflate(R.layout.activity_item_producto, parent,
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_producto, parent,
                 false);
         return new ProductoViewHolder(view);
     }
@@ -59,7 +59,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             super(itemView);
             // Conexión con los IDs de res/layout/item_producto.xml
             ivImagen = itemView.findViewById(R.id.iv_producto_imagen);
-            tvNombre = itemView.findViewById(R.id.tv_producto_nombre);
+            tvNombre = itemView.findViewById(R.id.tv_producto_titulo); // reclamarle al profe de que aqui no va tv_producto_nombre
             tvPrecio = itemView.findViewById(R.id.tv_producto_precio);
         }
     }

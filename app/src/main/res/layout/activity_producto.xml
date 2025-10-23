@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp">
+
         <!-- Imagen del Producto -->
         <ImageView
             android:id="@+id/iv_producto_imagen"
@@ -25,6 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
         <!-- Título del Producto -->
         <TextView
             android:id="@+id/tv_producto_titulo"
@@ -42,6 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_producto_imagen" />
+
         <!-- Precio del Producto -->
         <TextView
             android:id="@+id/tv_producto_precio"
@@ -54,6 +57,7 @@
             android:textColor="?attr/colorAccent"
             app:layout_constraintStart_toStartOf="@+id/tv_producto_titulo"
             app:layout_constraintTop_toBottomOf="@+id/tv_producto_titulo" />
+
         <!-- Vendedor -->
         <TextView
             android:id="@+id/tv_producto_vendedor"

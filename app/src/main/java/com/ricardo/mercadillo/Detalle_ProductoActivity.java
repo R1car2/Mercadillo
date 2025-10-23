@@ -13,6 +13,8 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 public class Detalle_ProductoActivity extends AppCompatActivity {
 
+    public static final String EXTRA_PRODUCTO_ID = "producto_id";
+
     // Claves para extras del Intent
     public static final String EXTRA_TITULO = "titulo";
     public static final String EXTRA_PRECIO = "precio";
