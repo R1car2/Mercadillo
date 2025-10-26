@@ -3,12 +3,14 @@ package com.ricardo.mercadillo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,7 +35,11 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         // 1. Inicializar Vistas
+        toolbar = findViewById(R.id.toolbar_home);
+        setSupportActionBar(toolbar);
+
         recyclerView = findViewById(R.id.rv_productos);
         fabPublicar = findViewById(R.id.fab_publicar);
 
@@ -51,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // 2. Configuración CLAVE del RecyclerView
         configurarRecyclerView();
+
         // 3. Botón FAB para publicar producto
         fabPublicar.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, PublicarActivity.class);
@@ -67,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         ProductoAdapter adapter = new ProductoAdapter(this, productosDePrueba);
         recyclerView.setAdapter(adapter);
     }
+
     //3.Crea una lista de productos ficticios para probar el RecyclerView (Simulación de DB).
     private List<Producto> cargarProductosDePrueba() {
         List<Producto> lista = new ArrayList<>();
@@ -84,6 +92,7 @@ public class HomeActivity extends AppCompatActivity {
                 "url_ficticia_6"));
         return lista;
     }
+
     // --- Menú Superior para Logout ---
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

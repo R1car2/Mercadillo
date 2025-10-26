@@ -6,8 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient"
-    tools:context="com.ricardo.mercadillo.">
+    tools:context="com.ricardo.mercadillo.HomeActivity">
     <!-- AppBarLayout contiene la Toolbar para el título y opciones de menú -->
+
+    <!-- Barra superior -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,13 +20,18 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="MarketPlace - Productos" />
+            app:title="MarketPlace - Productos"
+            app:contentInsetEndWithActions="0dp" />
+
     </com.google.android.material.appbar.AppBarLayout>
     <!-- RecyclerView para mostrar la lista de productos-->
     <!-- tools:listitem indica cómo se verá cada celda, usando la plantilla
    item_producto.xml -->
     <!-- Floating Action Button (FAB) para la acción de publicar un nuevo producto
    -->
+
+
+    <!-- Lista de Productos -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_productos"
         android:layout_width="match_parent"
@@ -44,6 +51,7 @@
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled"
         app:elevation="8dp" />
+
     <!-- 4. Botón flotante FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_publicar"
