@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.widget.SearchView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +32,10 @@ public class HomeActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
     private Toolbar toolbar;
 
+    // SEMANA 5: Referencia al Buscador y al Adaptador
+    private SearchView searchViewProductos;
+    private ProductoAdapter productoAdapter; // Necesario para llamar al método filtrar()
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,9 @@ public class HomeActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv_productos);
         fabPublicar = findViewById(R.id.fab_publicar);
+
+        // SEMANA 5: Inicializar el SearchView directamente desde el layout
+        searchViewProductos = findViewById(R.id.search_view_productos);
 
         // --- SEMANA 4: Inicialización
         bottomNav = findViewById(R.id.bottom_navigation_view);
@@ -58,12 +66,42 @@ public class HomeActivity extends AppCompatActivity {
         // 2. Configuración CLAVE del RecyclerView
         configurarRecyclerView();
 
+        // Semana 5: Configuración del Listener del Buscador para escuchar los cambios de texto
+        configurarBuscador();
+
+
         // 3. Botón FAB para publicar producto
         fabPublicar.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, PublicarActivity.class);
             startActivity(intent);
         });
     }
+
+    /**
+     * SEMANA 5: Método para configurar el buscador.
+     * Implementa OnQueryTextListener para detectar el texto ingresado.
+     */
+    private void configurarBuscador() {
+        if (searchViewProductos != null) {
+            searchViewProductos.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    // No hacemos nada al enviar la búsqueda (ej: presionar Enter)
+                    return false;
+                }
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    // SEMANA 5: Lógica del filtro - llama al método filtrar del ProductoAdapter
+                    if (productoAdapter != null) {
+                        productoAdapter.filtrar(newText);
+                    }
+                    return true;
+                }
+            });
+        }
+    }
+
+
     //2. Configura el RecyclerView con el LayoutManager y el ProductoAdapter
     private void configurarRecyclerView() {
         // 2.1. Define cómo se organizan los ítems (en este caso, en una lista vertical)
@@ -71,8 +109,10 @@ public class HomeActivity extends AppCompatActivity {
         // 2.2. Obtiene datos de prueba
         List<Producto> productosDePrueba = cargarProductosDePrueba();
         // 2.3. Crea el adaptador y lo conecta al RecyclerView
-        ProductoAdapter adapter = new ProductoAdapter(this, productosDePrueba);
-        recyclerView.setAdapter(adapter);
+        //ProductoAdapter adapter = new ProductoAdapter(this, productosDePrueba);
+        //recyclerView.setAdapter(adapter);
+        productoAdapter = new ProductoAdapter(this, productosDePrueba);
+        recyclerView.setAdapter(productoAdapter);
     }
 
     //3.Crea una lista de productos ficticios para probar el RecyclerView (Simulación de DB).

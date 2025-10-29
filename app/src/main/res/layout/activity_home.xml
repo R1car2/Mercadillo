@@ -23,6 +23,31 @@
             app:title="MarketPlace - Productos"
             app:contentInsetEndWithActions="0dp" />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_search_fixed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            android:background="@android:color/white"
+            >
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view_productos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:queryHint="Buscar..."
+                app:iconifiedByDefault="false"
+                app:searchIcon="@drawable/ic_search"
+                app:closeIcon="@drawable/ic_close"
+                android:paddingVertical="4dp"
+                android:background="@android:color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                />
+        </androidx.cardview.widget.CardView>
+
     </com.google.android.material.appbar.AppBarLayout>
     <!-- RecyclerView para mostrar la lista de productos-->
     <!-- tools:listitem indica cómo se verá cada celda, usando la plantilla
