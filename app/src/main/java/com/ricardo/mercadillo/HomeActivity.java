@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.ricardo.mercadillo.R;
 
+
+
 public class HomeActivity extends AppCompatActivity {
     // Vistas principales
     private RecyclerView recyclerView;
@@ -57,6 +59,14 @@ public class HomeActivity extends AppCompatActivity {
 
         // Configuración mínima del listener
         bottomNav.setOnItemSelectedListener(item -> {
+
+                    int itemId = item.getItemId();
+                    // SEMANA 5.1: Manejar la navegación a la pantalla de Cuenta
+                    if (itemId == R.id.navigation_account) {
+                        Intent intent = new Intent(HomeActivity.this, CuentaActivity.class);
+                        startActivity(intent);
+                        return true;}
+
             Toast.makeText(HomeActivity.this, "Navegando a: " + item.getTitle(),
                     Toast.LENGTH_SHORT).show();
             return true;
