@@ -55,23 +55,44 @@ public class HomeActivity extends AppCompatActivity {
 
         // --- SEMANA 4: Inicialización
         bottomNav = findViewById(R.id.bottom_navigation_view);
+        // SEMANA 6: ASEGURAMOS QUE EL ITEM 'INICIO' ESTE SELECCIONADO POR DEFECTO
+        MenuItem homeItem = bottomNav.getMenu().findItem(R.id.navigation_home);
+        if (homeItem != null){
+            homeItem.setChecked(true);
+        }
         bottomNav.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
 
         // Configuración mínima del listener
         bottomNav.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            Intent intent;
 
-                    int itemId = item.getItemId();
-                    // SEMANA 5.1: Manejar la navegación a la pantalla de Cuenta
-                    if (itemId == R.id.navigation_account) {
-                        Intent intent = new Intent(HomeActivity.this, CuentaActivity.class);
-                        startActivity(intent);
-                        return true;}
+            // SEMANA 5.1: Manejar la navegación a la pantalla de Cuenta
+            if (itemId == R.id.navigation_account) {
+                intent = new Intent(HomeActivity.this, CuentaActivity.class);
+                startActivity(intent);
+                return true;
+            }
 
-            Toast.makeText(HomeActivity.this, "Navegando a: " + item.getTitle(),
-                    Toast.LENGTH_SHORT).show();
+            // SEMANA 6: Manejar la navegación a la pantalla de Anuncios
+            else if (itemId == R.id.navigation_ads) {
+                intent = new Intent(HomeActivity.this, AnunciosActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
+            // SEMANA 6: Si presionamos Home, no hacemos nada (ya estamos aquí)
+            else if (itemId == R.id.navigation_home) {
+                return true;
+            }
+
+            // Revertido a la lógica de Toast temporal (para otros ítems)
+            Toast.makeText(HomeActivity.this, "Navegando a: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+
             return true;
+
         });
-        // --- FIN SEMANA 4 ---
+        // --- FIN SEMANA 4 y 6 ---
 
         // 2. Configuración CLAVE del RecyclerView
         configurarRecyclerView();
@@ -166,4 +187,6 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }

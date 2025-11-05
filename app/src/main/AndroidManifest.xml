@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mercadillo">
         <activity
+            android:name=".AnunciosActivity"
+            android:exported="false" />
+        <activity
             android:name=".CuentaActivity"
             android:exported="false" />
         <activity
@@ -40,7 +43,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
