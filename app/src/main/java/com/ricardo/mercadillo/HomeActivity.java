@@ -67,6 +67,16 @@ public class HomeActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             Intent intent;
 
+            // SEMANA 6.1: Manejar la navegación a la pantalla de Chats
+            if (itemId == R.id.navigation_chats) {
+                // Al presionar el botón de Chat, navegamos a ChatActivity
+                Toast.makeText(HomeActivity.this, "Abriendo Chats (Semana 6.1)", Toast.LENGTH_SHORT).show();
+                intent = new Intent(HomeActivity.this, ChatActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
+
             // SEMANA 5.1: Manejar la navegación a la pantalla de Cuenta
             if (itemId == R.id.navigation_account) {
                 intent = new Intent(HomeActivity.this, CuentaActivity.class);
