@@ -2,15 +2,25 @@ package com.ricardo.mercadillo;
 
 import android.os.Bundle;
 
+import android.content.Intent;
 import androidx.activity.EdgeToEdge;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.widget.ImageButton;
+import androidx.appcompat.widget.Toolbar;
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.button.MaterialButton;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 public class CuentaActivity extends AppCompatActivity {
 
@@ -25,6 +35,11 @@ public class CuentaActivity extends AppCompatActivity {
     private MaterialButton btnCambiarPassword;
     private MaterialButton btnEliminarAnuncios;
     private MaterialButton btnCerrarSesion;
+
+    // Elementos de Navegación Inferior
+    private BottomNavigationView bottomNav;
+    private FloatingActionButton fabPublicar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +56,10 @@ public class CuentaActivity extends AppCompatActivity {
         // 4. Inicializar y Configurar Listeners para los Botones
         inicializarBotonesOpciones();
         configurarListenersBotones();
+
+        //Configuración de la Cabecera
+        configurarCabecera();
+
     }
 
     private void inicializarVistasInformacion() {
@@ -67,23 +86,33 @@ public class CuentaActivity extends AppCompatActivity {
         btnCerrarSesion = findViewById(R.id.btn_cerrar_sesion);
     }
     private void configurarListenersBotones() {
+
         btnEditarPerfil.setOnClickListener(v -> {
-            Toast.makeText(this, "Navegar a Editar Perfil", Toast.LENGTH_SHORT).show();
-            // Lógica para Intent a EditarPerfilActivity
+            Intent intent = new Intent(CuentaActivity.this, Editar_perfilActivity.class);
+            startActivity(intent);
         });
+
         btnCambiarPassword.setOnClickListener(v -> {
-            Toast.makeText(this, "Navegar a Cambiar Contraseña", Toast.LENGTH_SHORT).show();
-            // Lógica para Intent a CambiarPasswordActivity
+            Intent intent = new Intent(CuentaActivity.this, CambiarPasswordActivity.class);
+            startActivity(intent);
         });
+
         btnEliminarAnuncios.setOnClickListener(v -> {
-            Toast.makeText(this, "Mostrar diálogo de confirmación para eliminar anuncios",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Mostrar diálogo de confirmación para eliminar anuncios", Toast.LENGTH_SHORT).show();
             // Lógica para mostrar AlertDialog
         });
+
         btnCerrarSesion.setOnClickListener(v -> {
             Toast.makeText(this, "Cerrando sesión...", Toast.LENGTH_SHORT).show();
             // Lógica para cerrar sesión (Firebase/SharedPreferences) y navegar a LoginActivity
         });
+
     }
+    private void configurarCabecera() {
+        // Listener para el botón de retroceso (flecha <- )
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
+    }
+
 
 }

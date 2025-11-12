@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,19 +34,15 @@ public class AnunciosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anuncios);
 
-        // 1. Configurar Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar_anuncios);
-        setSupportActionBar(toolbar);
-
-        // 2. Inicializar Vistas
+        // 1. Inicializar Vistas
         recyclerView = findViewById(R.id.rv_mis_productos);
-        bottomNav = findViewById(R.id.bottom_navigation_view);
 
-        // 3. Configuración del RecyclerView y carga de productos de prueba
+        // 2. Configuración del RecyclerView y carga de productos de prueba
         configurarRecyclerView();
 
-        // 4. Configuración del Listener de la barra de navegación (CLAVE)
-        configurarNavegacionInferior();
+        // 3. Configuracion cabecera
+        configurarCabecera();
+
     }
 
     private void configurarRecyclerView() {
@@ -109,6 +106,12 @@ public class AnunciosActivity extends AppCompatActivity {
         lista.add(new Producto("ID009", "Zapatillas Deportivas", "Para correr, talla 42.", "35.000", "url_ficticia_9"));
 
         return lista;
+    }
+
+    private void configurarCabecera() {
+        // Listener para el botón de retroceso (flecha <- )
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
     }
 
 
