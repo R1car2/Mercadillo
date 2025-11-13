@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "713221208930",
+    "project_id": "app-mercadillo",
+    "storage_bucket": "app-mercadillo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713221208930:android:9aa2c36fa6147858dbca3b",
+        "android_client_info": {
+          "package_name": "com.ricardo.mercadillo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjbVjqpqhrQSNx8b0uK3OvVS8mcwXoxoU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
