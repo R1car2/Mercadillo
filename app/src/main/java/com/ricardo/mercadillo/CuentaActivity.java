@@ -4,6 +4,12 @@ package com.ricardo.mercadillo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -32,11 +39,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class CuentaActivity extends AppCompatActivity {
 
     // Vistas para los datos
+    private ImageView imgPerfil;
     private TextView tvValorNombres;
     private TextView tvValorEmail;
     private TextView tvValorMiembro;
@@ -48,6 +58,15 @@ public class CuentaActivity extends AppCompatActivity {
     private MaterialButton btnCambiarPassword;
     private MaterialButton btnEliminarAnuncios;
     private MaterialButton btnCerrarSesion;
+
+    /*
+    // Elementos de Firebase
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private DatabaseReference databaseReference;
+    private ValueEventListener valueEventListener;
+    private final int DEFAULT_PROFILE_IMAGE = R.drawable.perfil;
+     */
 
     // Elementos de Navegación Inferior
     private BottomNavigationView bottomNav;
@@ -65,11 +84,16 @@ public class CuentaActivity extends AppCompatActivity {
 
         // SEMANA 8: Inicialización de Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        //currentUser = mAuth.getCurrentUser();
 
 
         // 1. Configurar la Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_cuenta);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
 
         // 2. Inicializar Vistas de Información
         inicializarVistasInformacion();
@@ -86,8 +110,31 @@ public class CuentaActivity extends AppCompatActivity {
 
     }
 
+    /*
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Cargar los datos y la foto cada vez que la actividad es visible
+        if (currentUser != null) {
+            cargarDatosPerfil();
+        } else {
+            // Manejar sesión no iniciada si fuera el caso
+        }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // IMPORTANTE: Detener el listener de Firebase al salir de la Activity
+        if (databaseReference != null && valueEventListener != null) {
+            databaseReference.removeEventListener(valueEventListener);
+            Log.d("CuentaActivity", "ValueEventListener de perfil removido.");
+        }
+    }
+    */
+
     private void inicializarVistasInformacion() {
         // Enlazar los IDs definidos en activity_cuenta.xml
+        imgPerfil = findViewById(R.id.img_perfil); // <-- Inicialización de la ImageView
         tvValorNombres = findViewById(R.id.tv_valor_nombres);
         tvValorEmail = findViewById(R.id.tv_valor_email);
         tvValorMiembro = findViewById(R.id.tv_valor_miembro);
@@ -102,6 +149,7 @@ public class CuentaActivity extends AppCompatActivity {
             return;
         }
 
+        // Referencia a la base de datos para escuchar cambios
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
 
         ref.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -157,6 +205,74 @@ public class CuentaActivity extends AppCompatActivity {
                 tvValorEstado.setText("Error");
             }
         });
+
+        //reemplazar por el de arriba
+        /*
+        // El listener se adjunta al nodo del usuario
+        valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String nombres = snapshot.child("nombre").getValue(String.class);
+                String urlImagenPerfil = snapshot.child("urlImagenPerfil").getValue(String.class);
+                String email = currentUser.getEmail();
+                String tiempoStr = snapshot.child("tiempo").getValue(String.class);
+                String telefono = snapshot.child("telefono").getValue(String.class);
+                String codTelefono = snapshot.child("codigoTelefono").getValue(String.class);
+                // Manejo de nulos y obtención de estado
+                nombres = nombres != null ? nombres : "No disponible";
+                email = email != null ? email : "No disponible";
+                telefono = telefono != null ? telefono : "No disponible";
+                codTelefono = codTelefono != null ? codTelefono : "";
+                String estado = "Verificado";
+                // Formateo de Teléfono
+                String cod_tel_completo = "";
+                if (!codTelefono.isEmpty()) {
+                    cod_tel_completo += "+" + codTelefono + " ";
+                }
+                cod_tel_completo += telefono;
+                if (cod_tel_completo.trim().isEmpty()) {
+                    cod_tel_completo = "No disponible";
+                }
+                // Establecer los valores en los TextViews
+                tvValorNombres.setText(nombres);
+                tvValorEmail.setText(email);
+                tvValorMiembro.setText(obtenerFecha(tiempoStr));
+                tvValorTelefono.setText(cod_tel_completo);
+                tvValorEstado.setText(estado);
+                // SOLUCIÓN A LA FOTO DE PERFIL: Cargar la imagen usando Glide
+                if (urlImagenPerfil != null && !urlImagenPerfil.isEmpty()) {
+                    try {
+                        // Carga la imagen desde la URL de Firebase Storage
+                        Glide.with(CuentaActivity.this)
+                                .load(urlImagenPerfil)
+                                .placeholder(DEFAULT_PROFILE_IMAGE) // Se muestra mientras carga
+                                .error(DEFAULT_PROFILE_IMAGE) // Se muestra si falla la carga
+                                .into(imgPerfil);
+                        Log.d("CuentaActivity", "Foto de perfil cargada correctamente desde Firebase
+                                URL.");
+                    } catch (Exception e) {
+                        Log.e("GLIDE_ERROR", "Error al cargar la imagen con Glide", e);
+                        imgPerfil.setImageResource(DEFAULT_PROFILE_IMAGE);
+                    }
+                } else {
+                    // Si la URL es nula o vacía, usamos la imagen predeterminada
+                    imgPerfil.setImageResource(DEFAULT_PROFILE_IMAGE);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Manejo de errores
+                tvValorNombres.setText("Error al cargar datos.");
+                tvValorEstado.setText("Error");
+                Toast.makeText(CuentaActivity.this, "Fallo al leer la BD: " + error.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        // Adjuntamos el listener al nodo del usuario para que se actualice en tiempo real
+        databaseReference.child(uid).addValueEventListener(valueEventListener);
+        */
+
     }
 
 
@@ -212,6 +328,19 @@ public class CuentaActivity extends AppCompatActivity {
         finish();
     }
 
-
+    private String obtenerFecha(String timestampString) {
+        if (timestampString == null || timestampString.isEmpty() || timestampString.equals("null"))
+        {
+            return "N/A";
+        }
+        try {
+            long timestamp = Long.parseLong(timestampString);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            return sdf.format(new Date(timestamp));
+        } catch (NumberFormatException e) {
+            Log.e("FECHA_FORMAT", "Error al parsear timestamp: " + timestampString, e);
+            return "N/A";
+        }
+    }
 
 }
