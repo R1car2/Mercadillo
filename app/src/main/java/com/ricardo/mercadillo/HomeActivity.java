@@ -177,7 +177,7 @@ public class HomeActivity extends AppCompatActivity {
     // --- Menú Superior para Logout ---
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu); // Preguntar de que hace hace referencia este menu
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
     @Override

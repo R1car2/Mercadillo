@@ -37,14 +37,15 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-//import com.google.firebase.storage.FirebaseStorage;
-//import com.google.firebase.storage.StorageReference;
-//import com.google.firebase.storage.UploadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.hbb20.CountryCodePicker;
 
 import java.util.Calendar;
@@ -71,9 +72,10 @@ public class Editar_perfilActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
-    //private StorageReference storageRef; // Se inicializa en onCreate()
+    private StorageReference storageRef; // Se inicializa en onCreate()
 
 
+    // ActivityResultLaunchers
     private ActivityResultLauncher<String[]> concederPermisoCamara;
     private ActivityResultLauncher<String> concederPermisoAlmacenamiento;
     private ActivityResultLauncher<Intent> resultadoCamara_ARL;
@@ -91,7 +93,7 @@ public class Editar_perfilActivity extends AppCompatActivity {
 
         // Inicialización de Firebase y ProgressDialog
         firebaseAuth = FirebaseAuth.getInstance();
-        //storageRef = FirebaseStorage.getInstance().getReference(); // Inicialización de Storage
+        storageRef = FirebaseStorage.getInstance().getReference(); // Inicialización de Storage
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Por favor espere");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -140,18 +142,11 @@ public class Editar_perfilActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 resultado -> {
                     if (resultado.getResultCode() == Activity.RESULT_OK) {
-                        // El URI de la imagen ya está en 'imageUri' desde imageCamara()
+                        // Si la foto se tomó correctamente, el URI ya está en 'imageUri'
                         if (imageUri != null) {
-                            try {
-                                Glide.with(this)
-                                        .load(imageUri)
-                                        .placeholder(R.drawable.perfil)
-                                        .into(imgPerfil);
-                                Toast.makeText(this, "Foto tomada y cargada exitosamente.", Toast.LENGTH_SHORT).show();
-                                // Aquí se llamaría a la función para subir la imagen a Firebase Storage
-                            } catch (Exception e) {
-                                Log.e("GLIDE_CAMARA", "Error al cargar la imagen con Glide: " + e.getMessage(), e);
-                            }
+                            subirImagenStorage(imageUri);
+                        } else {
+                            Toast.makeText(this, "Error: URI de imagen nula después de la cámara.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(this, "Toma de foto cancelada", Toast.LENGTH_SHORT).show();
@@ -159,26 +154,6 @@ public class Editar_perfilActivity extends AppCompatActivity {
                 }
         );
 
-        // remplazar el de arriba por este
-        /*
-        // --- 2. LANZADOR DE RESULTADO DE CÁMARA (Para procesar la imagen tomada) ---
- resultadoCamara_ARL = registerForActivityResult(
- new ActivityResultContracts.StartActivityForResult(),
- resultado -> {
- if (resultado.getResultCode() == Activity.RESULT_OK) {
- // Si la foto se tomó correctamente, el URI ya está en 'imageUri'
- if (imageUri != null) {
- subirImagenStorage(imageUri);
- } else {
- Toast.makeText(this, "Error: URI de imagen nula después de la cámara.",
-Toast.LENGTH_SHORT).show();
- }
- } else {
- Toast.makeText(this, "Toma de foto cancelada", Toast.LENGTH_SHORT).show();
- }
- }
- );
-         */
 
         // --- 3. LANZADOR DE PERMISOS DE ALMACENAMIENTO (solo para APIs antiguas) ---
         concederPermisoAlmacenamiento = registerForActivityResult(
@@ -199,41 +174,16 @@ Toast.LENGTH_SHORT).show();
                 new ActivityResultContracts.GetContent(),
                 uri -> {
                     if (uri != null) {
-                        imageUri = uri;
-                        try {
-                            Glide.with(this)
-                                    .load(imageUri)
-                                    .placeholder(R.drawable.perfil)
-                                    .into(imgPerfil);
-                            Toast.makeText(this, "Imagen de la galería seleccionada.", Toast.LENGTH_SHORT).show();
-                            // Aquí se llamaría a la función para subir la imagen a Firebase Storage
-                        } catch (Exception e) {
-                            Log.e("GLIDE_GALERIA", "Error al cargar la imagen con Glide: " + e.getMessage(), e);
-                        }
+                        imageUri = uri; // Asignamos la URI de la galería a la variable de clase
+                        subirImagenStorage(imageUri);
                     } else {
                         Toast.makeText(this, "Selección de galería cancelada", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
+
     }
 
-  //reemplazar por el de arriba
-    /*
-    // --- 4. LANZADOR DE GALERÍA (Contrato: GetContent) ---
- lanzarGaleria = registerForActivityResult(
- new ActivityResultContracts.GetContent(),
- uri -> {
- if (uri != null) {
- imageUri = uri; // Asignamos la URI de la galería a la variable de clase
- subirImagenStorage(imageUri);
- } else {
- Toast.makeText(this, "Selección de galería cancelada",
-Toast.LENGTH_SHORT).show();
- }
- }
- );
- }
-     */
 
 
     //Función para tomar una foto con la cámara
@@ -461,8 +411,7 @@ Toast.LENGTH_SHORT).show();
         });
     }
 
-    //descomentar
-    /*
+
     public void subirImagenStorage(Uri imageUri) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         // 1. Validar que la URI de la imagen y el usuario existan
@@ -571,7 +520,7 @@ Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
 
 
