@@ -53,9 +53,11 @@ public class PublicarActivity extends AppCompatActivity implements GaleriaImagen
     private TextInputEditText etPrecio;
     private TextInputEditText etDireccion;
     private TextInputEditText etDescripcion;
+    private TextInputEditText etMarca;
     private AutoCompleteTextView etCategoria;
     private AutoCompleteTextView etCondicion;
     private Button btnPublicar;
+
 
     // Adaptador y lista para la galería de imágenes
     private GaleriaImagenAdapter galeriaImagenAdapter;
@@ -124,7 +126,7 @@ public class PublicarActivity extends AppCompatActivity implements GaleriaImagen
         etPrecio = findViewById(R.id.et_publicar_precio);
         etDireccion = findViewById(R.id.et_publicar_direccion);
         etDescripcion = findViewById(R.id.et_publicar_descripcion);
-        // Asegúrate de que estos IDs existan en tu XML y usen AutoCompleteTextView
+        etMarca = findViewById(R.id.et_publicar_marca);
         etCategoria = findViewById(R.id.spinner_categoria);
         etCondicion = findViewById(R.id.spinner_condicion);
         btnPublicar = findViewById(R.id.btn_publicar_producto);
@@ -187,7 +189,6 @@ public class PublicarActivity extends AppCompatActivity implements GaleriaImagen
     }
 
     private void actualizarPlaceholderImagenPrincipal() {
-        // Asumiendo que R.drawable.agregar_img existe.
         ivPublicarImagenPlaceholder.setImageResource(R.drawable.agregar_img);
         ivPublicarImagenPlaceholder.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
     }
@@ -234,12 +235,14 @@ public class PublicarActivity extends AppCompatActivity implements GaleriaImagen
         String descripcion = etDescripcion.getText().toString().trim();
         String categoria = etCategoria.getText().toString().trim();
         String condicion = etCondicion.getText().toString().trim();
+        String marca = etMarca.getText().toString().trim();
 
         if (listaImagenesUri.isEmpty()) {
             Toast.makeText(this, "Debes seleccionar al menos una imagen para el producto.", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (TextUtils.isEmpty(nombre)) { etNombre.setError("El nombre del producto es obligatorio."); return false; }
+        if (TextUtils.isEmpty(marca)) { etMarca.setError("La marca es obligatoria."); return false; } // <--- 4. VALIDAR LA MARCA
         if (TextUtils.isEmpty(categoria)) { etCategoria.setError("La categoría es obligatoria."); return false; }
         if (TextUtils.isEmpty(condicion)) { etCondicion.setError("La condición es obligatoria."); return false; }
         if (TextUtils.isEmpty(precio) || !precio.matches("^[0-9]+([.,][0-9]{1,2})?$")) { etPrecio.setError("Ingresa un precio válido."); return false; }
@@ -249,7 +252,6 @@ public class PublicarActivity extends AppCompatActivity implements GaleriaImagen
         return true;
     }
 
-    // --- Lógica de Publicación y Subida
     private void publicarProducto(String currentUserId) {
         btnPublicar.setEnabled(false);
         Toast.makeText(this, "Iniciando publicación. Subiendo " + listaImagenesUri.size() + " imágenes...", Toast.LENGTH_LONG).show();
@@ -295,6 +297,7 @@ public class PublicarActivity extends AppCompatActivity implements GaleriaImagen
         String descripcion = etDescripcion.getText().toString().trim();
         String categoria = etCategoria.getText().toString().trim();
         String condicion = etCondicion.getText().toString().trim();
+        String marca = etMarca.getText().toString().trim(); // <--- 5. LEER LA MARCA ANTES DE ENVIAR
 
         double precio;
         try {
@@ -311,6 +314,7 @@ public class PublicarActivity extends AppCompatActivity implements GaleriaImagen
         producto.put("descripcion", descripcion);
         producto.put("categoria", categoria);
         producto.put("condicion", condicion);
+        producto.put("marca", marca);
         producto.put("imageUrls", imageUrls);
         // USO DE CONSTANTES para la fecha y estado
         producto.put("fechaPublicacion", Constantes.obtenerTiempoDis());
@@ -322,7 +326,7 @@ public class PublicarActivity extends AppCompatActivity implements GaleriaImagen
         databaseRef.push().setValue(producto)
                 .addOnSuccessListener(aVoid -> {
                     Log.d(TAG, "Producto publicado con éxito en Realtime Database. Vendedor ID: " + userId);
-                    Toast.makeText(this, "✅ ¡Producto publicado exitosamente!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "¡Producto publicado exitosamente!", Toast.LENGTH_LONG).show();
 
                     // Navegar a Home.class y limpiar la pila
                     Intent intent = new Intent(PublicarActivity.this, HomeActivity.class);
@@ -337,5 +341,6 @@ public class PublicarActivity extends AppCompatActivity implements GaleriaImagen
                 });
     }
 }
+
 
 
