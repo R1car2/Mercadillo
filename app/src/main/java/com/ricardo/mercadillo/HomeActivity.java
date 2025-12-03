@@ -21,7 +21,6 @@ import com.ricardo.mercadillo.model.Producto;
 import com.ricardo.mercadillo.R;
 
 
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -31,9 +30,6 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 // FIN MODIFICACIÓN SEMANA 9
-
-
-
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -86,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 6. Configuración del Bottom Nav (tu código existente)
+        // 6. Configuración del Bottom Nav (navegación a otras actividades)
         MenuItem homeItem = bottomNav.getMenu().findItem(R.id.navigation_home);
         if (homeItem != null) {
             homeItem.setChecked(true);
@@ -98,8 +94,9 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent;
 
             if (itemId == R.id.navigation_chats) {
-                Toast.makeText(HomeActivity.this, "Abriendo Chats (Semana 6.1)", Toast.LENGTH_SHORT).show();
-                intent = new Intent(HomeActivity.this, ChatActivity.class);
+                // 🟢 CORRECCIÓN APLICADA: Navegamos a la lista de chats (ChatListActivity)
+                Toast.makeText(HomeActivity.this, "Abriendo Bandeja de Entrada", Toast.LENGTH_SHORT).show();
+                intent = new Intent(HomeActivity.this, ChatListActivity.class); // <-- CAMBIO CRUCIAL
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_account) {
@@ -138,6 +135,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     if (productoAdapter != null) {
+                        // Llama al método filtrar del adaptador
                         productoAdapter.filtrar(newText);
                     }
                     return true;
@@ -149,13 +147,14 @@ public class HomeActivity extends AppCompatActivity {
 
     /**
      * 2. Configura el RecyclerView.
-     * MODIFICACIÓN SEMANA 9: Usa una lista inicialmente vacía.
+     * CORRECCIÓN FINAL: Se inicializa ProductoAdapter con los 3 argumentos requeridos, pasando NULL.
      */
     private void configurarRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // MODIFICACIÓN SEMANA 9: En lugar de cargar datos de prueba, usamos la lista vacía/actual
-        productoAdapter = new ProductoAdapter(this, listaProductosActual);
+        // 🟢 SOLUCIÓN AL ERROR: Pasamos 'null' como tercer argumento (el OnAnuncioActionListener)
+        productoAdapter = new ProductoAdapter(this, listaProductosActual, null);
+
         recyclerView.setAdapter(productoAdapter);
     }
 
@@ -169,7 +168,7 @@ public class HomeActivity extends AppCompatActivity {
         databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listaProductosActual.clear(); // Limpiamos la lista
+                listaProductosActual.clear();
 
                 // Iterar sobre los productos publicados
                 for (DataSnapshot productSnapshot : snapshot.getChildren()) {
@@ -207,6 +206,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Asumiendo R.menu.menu_home existe y se corrigió el nombre.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
@@ -229,4 +229,3 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 }
-

@@ -3,25 +3,25 @@ package com.ricardo.mercadillo.model;
 public class Mensaje {
 
     private String id;
-
     private String remitenteId;
-
     private String contenido;
-
     private long timestamp;
+    private String tipo; // Campo agregado para diferenciar TEXTO, IMAGEN, etc.
 
     public Mensaje() {
-        // Inicialización por defecto
+        // Constructor vacío requerido por Firebase Realtime Database
     }
 
-    public Mensaje(String id, String remitenteId, String contenido, long timestamp) {
+    // Constructor completo actualizado
+    public Mensaje(String id, String remitenteId, String contenido, long timestamp, String tipo) {
         this.id = id;
         this.remitenteId = remitenteId;
         this.contenido = contenido;
         this.timestamp = timestamp;
+        this.tipo = tipo;
     }
 
-    //Getters y Setters
+    // Getters y Setters (actualizados y nuevos)
 
     public String getId() {
         return id;
@@ -53,5 +53,14 @@ public class Mensaje {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    // Nuevo Getter y Setter para el tipo de mensaje
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

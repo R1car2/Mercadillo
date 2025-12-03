@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ricardo.mercadillo.R;
+import com.ricardo.mercadillo.Constantes; // Importación necesaria para las constantes de tipo
 import com.ricardo.mercadillo.model.Mensaje;
 
 import java.text.SimpleDateFormat;
@@ -64,8 +65,15 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.MensajeV
     public void onBindViewHolder(@NonNull MensajeViewHolder holder, int position) {
         Mensaje mensaje = listaMensajes.get(position);
 
-        // 1. Mostrar el contenido del mensaje
-        holder.tvContenido.setText(mensaje.getContenido());
+        // 1. Mostrar el contenido del mensaje (Validación de tipo: solo mostramos texto si es tipo TEXTO)
+        if (mensaje.getTipo() != null && mensaje.getTipo().equals(Constantes.TIPO_MENSAJE_TEXTO)) {
+            holder.tvContenido.setText(mensaje.getContenido());
+            holder.tvContenido.setVisibility(View.VISIBLE);
+            // Si tuvieras lógica para IMAGEN, aquí deberías ocultar tvContenido y mostrar un ImageView
+        } else {
+            // Si el mensaje no es de texto (o es nulo), ocultamos el TextView de contenido
+            holder.tvContenido.setVisibility(View.GONE);
+        }
 
         // 2. Mostrar la hora del mensaje (formato legible)
         String horaFormateada = formatTimestamp(mensaje.getTimestamp());

@@ -6,6 +6,12 @@ public class Constantes {
     // Constante para indicar el estado de un anuncio disponible
     public static final String anuncio_disponible = "Disponible";
 
+    // --- CHAT Y MENSAJERÍA EN TIEMPO REAL ---
+    public static final String NODO_CHATS = "chats";
+    public static final String TIPO_MENSAJE_TEXTO = "texto";
+    public static final String TIPO_MENSAJE_IMAGEN = "imagen";
+
+
     // --- LISTA DE CATEGORÍAS ---
     public static final String[] categorias = {
             "Todos",

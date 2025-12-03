@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/bg_gradient"
     tools:context=".AnunciosActivity">
 
     <!-- 1. AppBar con Contenedor de Barra (RelativeLayout) -->
@@ -21,7 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary">
 
-            <!-- Botón de Retroceso (TU COMPONENTE) -->
+            <!-- Botón de Retroceso -->
             <ImageButton
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
                 app:tint="@color/white"
                 android:scaleType="centerInside"/>
 
-            <!-- Título Centrado (Simulación de Título de Toolbar) -->
+            <!-- Título Centrado -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
