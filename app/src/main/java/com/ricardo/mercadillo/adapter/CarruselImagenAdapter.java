@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.ricardo.mercadillo.R; // Asegúrate de que R.drawable.agregar_img exista aquí
+import com.ricardo.mercadillo.R;
 import java.util.List;
 
 public class CarruselImagenAdapter extends RecyclerView.Adapter<CarruselImagenAdapter.ImageViewHolder> {
@@ -26,7 +26,7 @@ public class CarruselImagenAdapter extends RecyclerView.Adapter<CarruselImagenAd
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Infla el nuevo layout item_carrusel_imagen.xml
+
         View view = LayoutInflater.from(context).inflate(R.layout.item_carrusel_imagen, parent, false);
         return new ImageViewHolder(view);
     }
@@ -54,7 +54,7 @@ public class CarruselImagenAdapter extends RecyclerView.Adapter<CarruselImagenAd
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
-            // El ID debe coincidir con item_carrusel_imagen.xml
+
             imageView = itemView.findViewById(R.id.item_imagen_carrusel);
         }
     }

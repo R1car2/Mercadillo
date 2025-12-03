@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.hbb20.CountryCodePicker; // NUEVO: Importación del selector de país
+import com.hbb20.CountryCodePicker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -105,7 +105,7 @@ public class RegistroActivity extends AppCompatActivity {
                 });
     }
 
-    // CAMBIO: Ahora recibe teléfono y código
+
     private void guardarDatosUsuario(String uid, String nombre, String email, String telefono, String codigoTelefono) {
         // Objeto Map para guardar los datos
         Map<String, Object> userData = new HashMap<>();

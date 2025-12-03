@@ -32,16 +32,13 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     private List<Producto> listaProductos;
     private final List<Producto> listaOriginal;
 
-    // ⬅️ 1. NUEVO CAMPO: Referencia al Listener de acciones
     private final OnAnuncioActionListener listener;
 
-    // ⬅️ 2. NUEVA INTERFAZ: Para comunicar eventos de clic a la Activity
     public interface OnAnuncioActionListener {
         void onEditarProducto(Producto producto);
         void onEliminarProducto(Producto producto);
     }
 
-    // ⬅️ 3. CONSTRUCTOR MODIFICADO: Ahora acepta el listener
     public ProductoAdapter(Context context, List<Producto> lista, OnAnuncioActionListener listener) {
         this.context = context;
         this.listaProductos = new ArrayList<>(lista);
@@ -87,7 +84,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             context.startActivity(intent);
         });
 
-        // ⬅️ 4. NUEVA LÓGICA: Asignar OnClickListener a los botones de gestión
+
         if (listener != null) {
 
             // Botón Editar
@@ -149,12 +146,11 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         notifyDataSetChanged();
     }
 
-    // ⬅️ 5. VIEWHOLDER MODIFICADO: Incluye referencias a los botones de gestión
+
     public static class ProductoViewHolder extends RecyclerView.ViewHolder {
         ImageView ivImagenProducto;
         TextView tvNombre;
         TextView tvPrecio;
-        // ⬅️ NUEVOS: Variables para los botones
         ImageView btnEditar;
         ImageView btnEliminar;
 
@@ -165,7 +161,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             tvNombre = itemView.findViewById(R.id.tv_producto_titulo);
             tvPrecio = itemView.findViewById(R.id.tv_producto_precio);
 
-            // ⬅️ CRÍTICO: Inicialización de los botones de gestión
             btnEditar = itemView.findViewById(R.id.btn_editar);
             btnEliminar = itemView.findViewById(R.id.btn_eliminar);
         }

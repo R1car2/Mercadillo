@@ -13,7 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ricardo.mercadillo.R;
-import com.ricardo.mercadillo.Constantes; // Importación necesaria para las constantes de tipo
+import com.ricardo.mercadillo.Constantes;
 import com.ricardo.mercadillo.model.Mensaje;
 
 import java.text.SimpleDateFormat;

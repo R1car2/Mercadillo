@@ -262,9 +262,7 @@ public class Detalle_ProductoActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Muestra todos los detalles del producto en las vistas.
-     */
+
     private void mostrarDetallesProducto(Producto producto) {
         // 1. Cargar el Carrusel de imágenes
         cargarCarrusel(producto.getImageUrls());
@@ -285,9 +283,7 @@ public class Detalle_ProductoActivity extends AppCompatActivity {
         tvDireccionDetalle.setText("Retiro en: " + (producto.getDireccion() != null ? producto.getDireccion() : "No provista"));
     }
 
-    /**
-     * Inicializa y configura el ViewPager2 para el carrusel de imágenes.
-     */
+
     private void cargarCarrusel(List<String> imageUrls) {
         if (imageUrls != null && !imageUrls.isEmpty()) {
             CarruselImagenAdapter carruselAdapter = new CarruselImagenAdapter(this, imageUrls);
@@ -304,9 +300,7 @@ public class Detalle_ProductoActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Muestra los detalles de contacto del vendedor y controla la disponibilidad del botón de contacto.
-     */
+
     private void mostrarDetallesVendedor(String nombre, String email, String telefono) {
         // Nombre
         String displayNombre = (nombre != null && !nombre.isEmpty()) ? nombre : "Usuario Desconocido";

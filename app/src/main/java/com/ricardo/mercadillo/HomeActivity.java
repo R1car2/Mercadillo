@@ -145,10 +145,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * 2. Configura el RecyclerView.
-     * CORRECCIÓN FINAL: Se inicializa ProductoAdapter con los 3 argumentos requeridos, pasando NULL.
-     */
+
     private void configurarRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

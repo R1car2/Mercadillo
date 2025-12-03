@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         // Asegúrate de que este layout exista en res/layout/
         setContentView(R.layout.activity_login);
 
-        // 🔧 Inicializa FirebaseAuth aquí
+        // Inicializa FirebaseAuth aquí
         mAuth = FirebaseAuth.getInstance();
 
         // 1. Inicialización de Vistas

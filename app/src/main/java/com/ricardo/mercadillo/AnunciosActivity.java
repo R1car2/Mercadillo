@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-// ⬅️ CRÍTICO: La Activity ahora implementa la interfaz de acciones del adaptador
+
 public class AnunciosActivity extends AppCompatActivity implements ProductoAdapter.OnAnuncioActionListener {
 
     private static final String TAG = "AnunciosActivity";
@@ -60,7 +60,7 @@ public class AnunciosActivity extends AppCompatActivity implements ProductoAdapt
         // 3. Configurar RecyclerView (MODIFICADO)
         listaProductos = new ArrayList<>();
 
-        // ⬅️ CRÍTICO: Usamos el constructor MODIFICADO y pasamos 'this' como listener
+
         productoAdapter = new ProductoAdapter(this, listaProductos, this);
 
         // Configuración del LayoutManager
@@ -74,7 +74,7 @@ public class AnunciosActivity extends AppCompatActivity implements ProductoAdapt
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
     }
 
-    // ⬅️ NUEVO: Este método asegura que la lista se refresque al volver de EditarAnuncioActivity
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -144,11 +144,9 @@ public class AnunciosActivity extends AppCompatActivity implements ProductoAdapt
         }
     }
 
-    // -----------------------------------------------------------------
-    //          IMPLEMENTACIÓN DE ProductoAdapter.OnAnuncioActionListener
-    // -----------------------------------------------------------------
 
-    // ⬅️ Lógica de Edición: Abre la nueva Activity
+
+
     @Override
     public void onEditarProducto(Producto producto) {
         Log.d(TAG, "Editando producto con ID: " + producto.getId());
@@ -161,7 +159,7 @@ public class AnunciosActivity extends AppCompatActivity implements ProductoAdapt
         Toast.makeText(this, "Abriendo editor para: " + producto.getNombre(), Toast.LENGTH_SHORT).show();
     }
 
-    // ⬅️ Lógica de Eliminación: Muestra el diálogo de confirmación
+
     @Override
     public void onEliminarProducto(Producto producto) {
         Log.d(TAG, "Solicitud de eliminación para ID: " + producto.getId());

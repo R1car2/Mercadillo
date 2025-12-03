@@ -76,10 +76,7 @@ public class ChatListActivity extends AppCompatActivity {
         cargarConversaciones();
     }
 
-    /**
-     * Lógica principal para cargar, filtrar y mapear conversaciones de Firebase,
-     * incluyendo la consulta del nombre del contacto desde la tabla 'users'.
-     */
+
     // ChatListActivity.java
 
     private void cargarConversaciones() {
@@ -180,9 +177,7 @@ public class ChatListActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Método auxiliar llamado solo cuando todas las consultas asíncronas han terminado.
-     */
+
     private void finalizarCarga(List<Conversacion> listaPendiente) {
         listaConversaciones.clear();
 
@@ -206,9 +201,7 @@ public class ChatListActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Auxiliar: Extrae el ID del usuario que no es el usuario actual del chatRoomId.
-     */
+
     private String extraerOtroUserId(String chatRoomId, String currentUserId) {
         // El ID de la sala está en formato "UID_MENOR_UID_MAYOR"
         String[] uids = chatRoomId.split("_");
@@ -223,9 +216,7 @@ public class ChatListActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Auxiliar: Itera los mensajes de una sala de chat para obtener el último y el timestamp.
-     */
+
     private Conversacion obtenerUltimaConversacion(
             String chatRoomId,
             String otroUserId,
@@ -264,9 +255,7 @@ public class ChatListActivity extends AppCompatActivity {
         return null;
     }
 
-    /**
-     * Auxiliar: Muestra/Oculta el mensaje de "No hay chats".
-     */
+
     private void mostrarMensajeNoConversaciones(boolean mostrar) {
         if (mostrar) {
             tvNoChats.setVisibility(View.VISIBLE);
